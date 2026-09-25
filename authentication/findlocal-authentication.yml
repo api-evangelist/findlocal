@@ -1,0 +1,20 @@
+generated: '2026-09-25'
+method: searched
+generator: extract-docs-artifacts.py (local)
+source: https://findlocal.community/login
+sources:
+- https://findlocal.community/login
+- https://findlocal.community/login
+- https://findlocal.community/mcp
+schemes:
+- type: oauth2
+  name: OAuth 2.1 PKCE
+  evidence: 'Auth: OAuth 2.1 with PKCE and dynamic client registration ( /authorize , /token , /register ), then a one-field consent page asking
+    for your API key .'
+  flows:
+  - authorization_code
+  authorize_url: /authorize
+  scopes:
+  - mcp:read
+  how_to_obtain: Create a free account and make a key in the dashboard.
+docs: https://findlocal.community/login

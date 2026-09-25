@@ -1,0 +1,6 @@
+generated: '2026-09-25'
+method: probed
+generator: harvest-llms.py
+source: https://findlocal.community/llms.txt
+bytes: 4623
+note: saved verbatim; the provider's own document

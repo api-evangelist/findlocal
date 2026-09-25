@@ -1,0 +1,104 @@
+generated: '2026-09-25'
+method: derived
+generator: derive-mcp-candidate.py
+source:
+- openapi/findlocal-openapi.json
+status: candidate
+deployment:
+  mode: none
+  auth: unknown
+  verified: probed
+note: No MCP server was found. The pre-flight posted tools/list to /mcp on api.findlocal.community, findlocal.community; verdict absent. Candidate
+  tools below are derived from the 18 operation(s) in the provider's own OpenAPI (18 listed); they describe what a server WOULD expose, not one
+  that exists.
+tools:
+- name: bluesky_profile
+  operationId: blueskyProfile
+  method: GET
+  path: /api/v1/bluesky/profile
+  description: Public profile on bluesky, with the exact follower count.
+- name: github_profile
+  operationId: githubProfile
+  method: GET
+  path: /api/v1/github/profile
+  description: Public profile on github, with the exact follower count.
+- name: instagram_profile
+  operationId: instagramProfile
+  method: GET
+  path: /api/v1/instagram/profile
+  description: Public profile on instagram, with the exact follower count.
+- name: linktree_profile
+  operationId: linktreeProfile
+  method: GET
+  path: /api/v1/linktree/profile
+  description: Public profile on linktree, with the exact follower count.
+- name: mastodon_profile
+  operationId: mastodonProfile
+  method: GET
+  path: /api/v1/mastodon/profile
+  description: Public profile on mastodon, with the exact follower count.
+- name: medium_profile
+  operationId: mediumProfile
+  method: GET
+  path: /api/v1/medium/profile
+  description: Public profile on medium, with the exact follower count.
+- name: pinterest_profile
+  operationId: pinterestProfile
+  method: GET
+  path: /api/v1/pinterest/profile
+  description: Public profile on pinterest, with the exact follower count.
+- name: soundcloud_profile
+  operationId: soundcloudProfile
+  method: GET
+  path: /api/v1/soundcloud/profile
+  description: Public profile on soundcloud, with the exact follower count.
+- name: threads_profile
+  operationId: threadsProfile
+  method: GET
+  path: /api/v1/threads/profile
+  description: Public profile on threads, with the exact follower count.
+- name: tiktok_profile
+  operationId: tiktokProfile
+  method: GET
+  path: /api/v1/tiktok/profile
+  description: Public profile on tiktok, with the exact follower count.
+- name: threads_posts
+  operationId: threadsPosts
+  method: GET
+  path: /api/v1/threads/posts
+  description: Recent posts on threads
+- name: bluesky_posts
+  operationId: blueskyPosts
+  method: GET
+  path: /api/v1/bluesky/posts
+  description: Recent posts on bluesky
+- name: mastodon_posts
+  operationId: mastodonPosts
+  method: GET
+  path: /api/v1/mastodon/posts
+  description: Recent posts on mastodon
+- name: github_repos
+  operationId: githubRepos
+  method: GET
+  path: /api/v1/github/repos
+  description: Public repositories of a GitHub account, with stars and forks.
+- name: profile_history
+  operationId: profileHistory
+  method: GET
+  path: /api/v1/{platform}/history
+  description: Daily history of a profile we have already archived, for one platform.
+- name: list_niches
+  operationId: listNiches
+  method: GET
+  path: /api/v1/nichos
+  description: List available niches and how much history each has
+- name: niche_trends
+  operationId: nicheTrends
+  method: GET
+  path: /api/v1/trends/{niche}
+  description: Historical series for one niche, grouped by item
+- name: niche_movers
+  operationId: nicheMovers
+  method: GET
+  path: /api/v1/movers/{niche}
+  description: What gained traction in a niche — charged only when it finds movement

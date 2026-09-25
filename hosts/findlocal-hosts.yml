@@ -1,0 +1,91 @@
+generated: '2026-09-25'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 6
+  own: 2
+  other_domain: 2
+  platform: 2
+  roles:
+  - api
+  - collections
+  - other
+  - source
+  - website
+hosts:
+- host: api.findlocal.community
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: findlocal.community
+  role: api
+  relation: own
+- host: api.honesthook.com
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: honesthook.com
+  role: api
+  relation: other-domain
+- host: findlocal.community
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - docs-index
+  - spec-found
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - TermsOfService
+  - PrivacyPolicy
+  - Blog
+  - Website
+  - Documentation
+  - APIReference
+  - GettingStarted
+  - Pricing
+  - SignUp
+  - Login
+  serves:
+  - api
+  - docs
+  - spec
+  - cdn
+  vendor: cloudflare
+  registrable_domain: findlocal.community
+  role: website
+  relation: own
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: honesthook.com
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: honesthook.com
+  role: other
+  relation: other-domain
+- host: www.postman.com
+  found_by:
+  - pointer
+  - vendor-detect
+  types:
+  - Postman
+  serves:
+  - api-collections
+  vendor: postman
+  registrable_domain: postman.com
+  role: collections
+  relation: platform

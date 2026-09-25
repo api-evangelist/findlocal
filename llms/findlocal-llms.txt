@@ -1,0 +1,34 @@
+# Find Local
+
+> Find Local (findlocal.community) is a local event data platform covering 83 US metros. It collects concerts, comedy shows, theater, author readings, live music and community events directly from venue calendars — updated daily — and serves them through a browsable site, free embeddable widgets, a key-gated JSON API (free tier available) and an MCP server. Literary events are indexed by author AND by book.
+
+Find Local's data is collected from the venues themselves rather than ticketing aggregators, so it includes small community events that never appear on Ticketmaster-style platforms; each event records whether it came from the venue's own calendar or a partner API. Event and venue pages serve schema.org Event/Place JSON-LD in the initial HTML.
+
+## Key pages
+
+- [Home](https://findlocal.community/): the hyper-local event API — live totals, a sample request, coverage map. /platform 301s here.
+- [Pricing](https://findlocal.community/pricing): free tier and paid plans; one key for the JSON API and the MCP server
+- [API docs + playground](https://findlocal.community/docs): OpenAPI reference (https://findlocal.community/openapi.json); the playground runs real queries with no key
+- [MCP server](https://findlocal.community/mcp) · [Widgets](https://findlocal.community/widgets) · [Compare](https://findlocal.community/compare) · [Explore the data](https://findlocal.community/explore)
+- [City pages](https://findlocal.community/city/boston): the event feed, per metro, at /city/<slug> (e.g. /city/new-york, /city/chicago, /city/los-angeles) — filterable by date, category and price
+- [Venues](https://findlocal.community/venues): browsable directory of active venues
+- [Blog](https://findlocal.community/blog): guides and writing about local event discovery
+- [About](https://findlocal.community/about)
+
+## URL shapes
+
+- Event detail: https://findlocal.community/event/<uuid> — expired events return 410
+- Venue detail: https://findlocal.community/venue/<uuid>
+- City listing: https://findlocal.community/city/<city-slug>
+
+## Machine-readable
+
+- Sitemap: https://findlocal.community/sitemap.xml
+- JSON API: https://findlocal.community/api/events?city=Boston (also /api/events/<uuid>, /api/venues?city=Boston); requires an API key (Authorization: Bearer <key>); noindex, CORS enabled. The widget JSON /api/embed/events, the map endpoint /api/events/map and /api/geo need no key (they back the free embeddable widgets).
+- Full developer reference as Markdown, for LLMs: https://findlocal.community/llms-full.txt (generated from the OpenAPI document)
+- API reference: https://findlocal.community/docs (walkthrough: https://findlocal.community/blog/findlocal-events-api)
+- Pricing: https://findlocal.community/pricing · free keys: https://findlocal.community/signup — Free (1,000 calls/mo), Hobby ($9/mo, 10,000 calls/mo), Pro ($49/mo, 75,000 calls/mo), Enterprise (more than Pro — email elliot@findlocal.community); one key works for both the JSON API and the MCP server. The Free plan requires a visible "Event data by FindLocal" link back to https://findlocal.community where the data is shown; paid plans do not (https://findlocal.community/terms#api)
+- MCP server: https://mcp.findlocal.community/mcp — reference: https://findlocal.community/mcp
+- Embeddable widget: <script src="https://findlocal.community/widget.js" data-widget="literary-new-england"></script> renders a list/calendar/map of live events in an iframe (/embed/events); reference: https://findlocal.community/widgets
+- Cities covered (83): Ann Arbor, Atlanta, Austin, Baltimore, Bangor, Bloomington, Boise, Boston, Brattleboro, Buffalo, Burlington, Cape Cod, Charleston, Charlotte, Chicago, Cincinnati, Cleveland, Columbia MO, Columbus, Dallas, Denver, Des Moines, Detroit, Duluth, Fort Collins, Grand Rapids, Green Bay, Hanover, Harrisburg, Hartford, Hilton Head, Houston, Hudson Valley, Indianapolis, Iowa City, Jersey Shore, Kansas City, Lansing, Las Vegas, Lincoln, Los Angeles, Madison, Manchester, Miami, Milwaukee, Minneapolis, Nashville, New Haven, New Orleans, New York, Northampton, Oklahoma City, Orlando, Philadelphia, Phoenix, Pittsburgh, Pittsfield, Portland, Portland ME, Portsmouth, Providence, Raleigh, Rochester, Rockland, Rutland, Sacramento, Salt Lake City, San Antonio, San Diego, San Francisco, Santa Barbara, Seattle, Sonoma, Spokane, St. Louis, Stamford, Tampa, Traverse City, Tucson, Washington, Wenatchee, Wilmington NC, Worcester
+- Event categories: music, comedy, theater, dance, literary, art, food_drink, family, market, workshop, fitness, nightlife, community, festival, parks

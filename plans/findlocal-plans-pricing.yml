@@ -1,0 +1,27 @@
+generated: 2026-09-25
+method: searched
+source: https://findlocal.community/pricing
+name: FindLocal API Plans
+audience: developer-api
+pricing_basis: per_month
+published: true
+plan_count: 3
+plans:
+  - name: Free
+    price_text: "Free"
+    price: 0
+    features:
+      - "Limited access"
+    limits: []
+  - name: Hobby
+    price_text: "$9"
+    price: 9
+    features:
+      - "Standard access"
+    limits: []
+  - name: Pro
+    price_text: "$49"
+    price: 49
+    features:
+      - "Full access"
+    limits: []

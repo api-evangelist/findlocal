@@ -1,0 +1,951 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "FindLocal Events API",
+    "version": "1.0.0",
+    "description": "Hyper-local events for 83 US metros — concerts, readings, classes, community nights — with venues and coordinates.\n\n**Try it right here:** the *Playground* server needs no key and returns real data, capped at 5 rows a call. Switch to *Production* and paste a key for full results.\n\n**Free** — free, 1,000 calls/month, 30/min  \n**Hobby** — $9/mo, 10,000 calls/month, 60/min  \n**Pro** — $49/mo, 75,000 calls/month, 120/min  \n**Enterprise** — more than Pro: email elliot@findlocal.community\n\nFree-plan keys must show a link back (\"Event data by FindLocal\" → https://findlocal.community) where the data appears; paid plans don't. [API terms](https://findlocal.community/terms#api).\n\n[Get a free key](https://findlocal.community/signup) · one key works for this API and the MCP server."
+  },
+  "servers": [
+    {
+      "url": "/api/playground",
+      "description": "Playground — no key, real data, 5 rows per call (100 when logged in)"
+    },
+    {
+      "url": "https://findlocal.community/api",
+      "description": "Production — needs your API key"
+    }
+  ],
+  "security": [
+    {
+      "apiKey": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Events"
+    },
+    {
+      "name": "Venues"
+    }
+  ],
+  "paths": {
+    "/events": {
+      "get": {
+        "tags": [
+          "Events"
+        ],
+        "operationId": "listEvents",
+        "summary": "Search upcoming events",
+        "description": "Upcoming events in one metro, filtered. Every parameter is optional; with none you get Boston, chronological.",
+        "parameters": [
+          {
+            "name": "city",
+            "in": "query",
+            "description": "Metro slug (or name). One of 83 US metros.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ann-arbor",
+                "atlanta",
+                "austin",
+                "baltimore",
+                "bangor",
+                "bloomington",
+                "boise",
+                "boston",
+                "brattleboro",
+                "buffalo",
+                "burlington",
+                "cape-cod",
+                "charleston",
+                "charlotte",
+                "chicago",
+                "cincinnati",
+                "cleveland",
+                "columbia-mo",
+                "columbus",
+                "dallas",
+                "denver",
+                "des-moines",
+                "detroit",
+                "duluth",
+                "fort-collins",
+                "grand-rapids",
+                "green-bay",
+                "hanover",
+                "harrisburg",
+                "hartford",
+                "hilton-head",
+                "houston",
+                "hudson-valley",
+                "indianapolis",
+                "iowa-city",
+                "jersey-shore",
+                "kansas-city",
+                "lansing",
+                "las-vegas",
+                "lincoln",
+                "los-angeles",
+                "madison",
+                "manchester",
+                "miami",
+                "milwaukee",
+                "minneapolis",
+                "nashville",
+                "new-haven",
+                "new-orleans",
+                "new-york",
+                "northampton",
+                "oklahoma-city",
+                "orlando",
+                "philadelphia",
+                "phoenix",
+                "pittsburgh",
+                "pittsfield",
+                "portland",
+                "portland-me",
+                "portsmouth",
+                "providence",
+                "raleigh",
+                "rochester",
+                "rockland",
+                "rutland",
+                "sacramento",
+                "salt-lake-city",
+                "san-antonio",
+                "san-diego",
+                "san-francisco",
+                "santa-barbara",
+                "seattle",
+                "sonoma",
+                "spokane",
+                "st-louis",
+                "stamford",
+                "tampa",
+                "traverse-city",
+                "tucson",
+                "washington",
+                "wenatchee",
+                "wilmington-nc",
+                "worcester"
+              ],
+              "default": "boston"
+            },
+            "example": "boston"
+          },
+          {
+            "name": "when",
+            "in": "query",
+            "description": "Date window, resolved in the metro's own time zone — or one day as YYYY-MM-DD.",
+            "schema": {
+              "type": "string",
+              "examples": [
+                "anytime",
+                "today",
+                "tomorrow",
+                "weekend",
+                "week",
+                "2026-10-31"
+              ]
+            },
+            "example": "weekend"
+          },
+          {
+            "name": "cat",
+            "in": "query",
+            "description": "Comma list of category slugs. `literary` also matches everything at bookstores and libraries.",
+            "schema": {
+              "type": "string",
+              "examples": [
+                "music",
+                "comedy",
+                "theater",
+                "dance"
+              ]
+            }
+          },
+          {
+            "name": "free",
+            "in": "query",
+            "description": "Free events only.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            }
+          },
+          {
+            "name": "paid",
+            "in": "query",
+            "description": "Paid events only.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            }
+          },
+          {
+            "name": "max",
+            "in": "query",
+            "description": "Maximum price in USD (events with a parsed price).",
+            "schema": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "tod",
+            "in": "query",
+            "description": "Comma list of times of day.",
+            "schema": {
+              "type": "string",
+              "examples": [
+                "morning",
+                "afternoon",
+                "evening"
+              ]
+            }
+          },
+          {
+            "name": "region",
+            "in": "query",
+            "description": "Neighborhood / sub-area inside the metro, e.g. Cambridge.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Free text over title, venue and performer names.",
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "performer",
+            "in": "query",
+            "description": "Substring match on performer names only.",
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "authors",
+            "in": "query",
+            "description": "Only events with a known author on the bill.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            }
+          },
+          {
+            "name": "near",
+            "in": "query",
+            "description": "Proximity search: `<lat>,<lng>`. Orders by distance and overrides `sort`.",
+            "schema": {
+              "type": "string",
+              "pattern": "^-?\\d+(\\.\\d+)?,-?\\d+(\\.\\d+)?$"
+            }
+          },
+          {
+            "name": "radius_km",
+            "in": "query",
+            "description": "Radius for `near` (default 25, max 200).",
+            "schema": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 200,
+              "default": 25
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "`date` is chronological; `featured` is the site's editorial ranking.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "featured",
+                "date"
+              ],
+              "default": "date"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "1-based page (100 per page). Ignored by the playground server.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Rows per call (max 500). The playground server caps this at 5 (100 signed in).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            }
+          },
+          {
+            "name": "venue",
+            "in": "query",
+            "description": "A venue uuid: upcoming events at that venue (the metro comes from the venue).",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Events plus paging metadata.",
+            "headers": {
+              "X-RateLimit-Remaining": {
+                "description": "Calls left this MONTH on this key.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Limit": {
+                "description": "Requests allowed per MINUTE, shared by all of the account's keys.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "When the per-minute window reopens (Unix seconds).",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Event"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "city": {
+                          "type": "string"
+                        },
+                        "count": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "page": {
+                          "type": "integer"
+                        },
+                        "page_size": {
+                          "type": "integer"
+                        },
+                        "sort": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Per-minute rate limit or monthly quota exceeded. `Retry-After` is the seconds until the minute window reopens, or until the quota refills on the 1st.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events/{id}": {
+      "get": {
+        "tags": [
+          "Events"
+        ],
+        "operationId": "getEvent",
+        "summary": "One event",
+        "description": "A single event by id — past and delisted events included (`is_deleted`).",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The event.",
+            "headers": {
+              "X-RateLimit-Remaining": {
+                "description": "Calls left this MONTH on this key.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Limit": {
+                "description": "Requests allowed per MINUTE, shared by all of the account's keys.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "When the per-minute window reopens (Unix seconds).",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Event"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unknown id.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Per-minute rate limit or monthly quota exceeded. `Retry-After` is the seconds until the minute window reopens, or until the quota refills on the 1st.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/venues": {
+      "get": {
+        "tags": [
+          "Venues"
+        ],
+        "operationId": "listVenues",
+        "summary": "Venues in a metro",
+        "description": "Active venues with their upcoming-event counts.",
+        "parameters": [
+          {
+            "name": "city",
+            "in": "query",
+            "description": "Metro slug (or name).",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ann-arbor",
+                "atlanta",
+                "austin",
+                "baltimore",
+                "bangor",
+                "bloomington",
+                "boise",
+                "boston",
+                "brattleboro",
+                "buffalo",
+                "burlington",
+                "cape-cod",
+                "charleston",
+                "charlotte",
+                "chicago",
+                "cincinnati",
+                "cleveland",
+                "columbia-mo",
+                "columbus",
+                "dallas",
+                "denver",
+                "des-moines",
+                "detroit",
+                "duluth",
+                "fort-collins",
+                "grand-rapids",
+                "green-bay",
+                "hanover",
+                "harrisburg",
+                "hartford",
+                "hilton-head",
+                "houston",
+                "hudson-valley",
+                "indianapolis",
+                "iowa-city",
+                "jersey-shore",
+                "kansas-city",
+                "lansing",
+                "las-vegas",
+                "lincoln",
+                "los-angeles",
+                "madison",
+                "manchester",
+                "miami",
+                "milwaukee",
+                "minneapolis",
+                "nashville",
+                "new-haven",
+                "new-orleans",
+                "new-york",
+                "northampton",
+                "oklahoma-city",
+                "orlando",
+                "philadelphia",
+                "phoenix",
+                "pittsburgh",
+                "pittsfield",
+                "portland",
+                "portland-me",
+                "portsmouth",
+                "providence",
+                "raleigh",
+                "rochester",
+                "rockland",
+                "rutland",
+                "sacramento",
+                "salt-lake-city",
+                "san-antonio",
+                "san-diego",
+                "san-francisco",
+                "santa-barbara",
+                "seattle",
+                "sonoma",
+                "spokane",
+                "st-louis",
+                "stamford",
+                "tampa",
+                "traverse-city",
+                "tucson",
+                "washington",
+                "wenatchee",
+                "wilmington-nc",
+                "worcester"
+              ],
+              "default": "boston"
+            },
+            "example": "boston"
+          },
+          {
+            "name": "region",
+            "in": "query",
+            "description": "Neighborhood / sub-area.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Substring match on the venue name.",
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Venue type, e.g. bookstore, music venue, library.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Order.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "name",
+                "upcoming"
+              ],
+              "default": "name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Venues.",
+            "headers": {
+              "X-RateLimit-Remaining": {
+                "description": "Calls left this MONTH on this key.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Limit": {
+                "description": "Requests allowed per MINUTE, shared by all of the account's keys.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "When the per-minute window reopens (Unix seconds).",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Venue"
+                      }
+                    },
+                    "meta": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Per-minute rate limit or monthly quota exceeded. `Retry-After` is the seconds until the minute window reopens, or until the quota refills on the 1st.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "apiKey": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Your FindLocal API key (`Authorization: Bearer <key>`; `X-API-Key` also works). Not needed on the Playground server."
+      }
+    },
+    "schemas": {
+      "Event": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "event_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Calendar day in the venue's own time zone."
+          },
+          "start_time": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "HH:MM, 24-hour, venue-local."
+          },
+          "end_time": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "category": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "music | comedy | theater | dance | literary | art | food_drink | family | market | workshop | fitness | nightlife | community | festival | parks"
+          },
+          "event_type": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "performers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "image": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "price": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Price label as published, e.g. \"$18 adv / $22 door\"."
+          },
+          "price_amount": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Parsed lowest price in USD; 0 = free."
+          },
+          "detail_page_url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "ticket_page_url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "image_url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "city": {
+            "type": "string"
+          },
+          "region": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "venue_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "venue_name": {
+            "type": "string"
+          },
+          "venue_address": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "venue_lat": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "venue_lng": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "venue_type": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "author_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "book_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "series_count": {
+            "type": "integer",
+            "description": "Upcoming dates of the same recurring event at this venue."
+          },
+          "is_deleted": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ]
+          },
+          "updated_at": {
+            "type": "string"
+          }
+        }
+      },
+      "Venue": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "region": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "address": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "latitude": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "longitude": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "type": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "image": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "upcoming_count": {
+            "type": "integer"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

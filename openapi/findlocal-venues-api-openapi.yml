@@ -1,0 +1,238 @@
+openapi: 3.2.0
+info:
+  title: FindLocal Events Venues API
+  version: 1.0.0
+  description: Hyper-local events for 83 US metros — concerts, readings, classes, community nights — with venues and coordinates.
+servers:
+- url: /api/playground
+  description: Playground — no key, real data, 5 rows per call (100 when logged in)
+- url: https://findlocal.community/api
+  description: Production — needs your API key
+security:
+- apiKey: []
+tags:
+- name: Venues
+paths:
+  /venues:
+    get:
+      tags:
+      - Venues
+      operationId: listVenues
+      summary: Venues in a metro
+      description: Active venues with their upcoming-event counts.
+      parameters:
+      - name: city
+        in: query
+        description: Metro slug (or name).
+        schema:
+          type: string
+          enum:
+          - ann-arbor
+          - atlanta
+          - austin
+          - baltimore
+          - bangor
+          - bloomington
+          - boise
+          - boston
+          - brattleboro
+          - buffalo
+          - burlington
+          - cape-cod
+          - charleston
+          - charlotte
+          - chicago
+          - cincinnati
+          - cleveland
+          - columbia-mo
+          - columbus
+          - dallas
+          - denver
+          - des-moines
+          - detroit
+          - duluth
+          - fort-collins
+          - grand-rapids
+          - green-bay
+          - hanover
+          - harrisburg
+          - hartford
+          - hilton-head
+          - houston
+          - hudson-valley
+          - indianapolis
+          - iowa-city
+          - jersey-shore
+          - kansas-city
+          - lansing
+          - las-vegas
+          - lincoln
+          - los-angeles
+          - madison
+          - manchester
+          - miami
+          - milwaukee
+          - minneapolis
+          - nashville
+          - new-haven
+          - new-orleans
+          - new-york
+          - northampton
+          - oklahoma-city
+          - orlando
+          - philadelphia
+          - phoenix
+          - pittsburgh
+          - pittsfield
+          - portland
+          - portland-me
+          - portsmouth
+          - providence
+          - raleigh
+          - rochester
+          - rockland
+          - rutland
+          - sacramento
+          - salt-lake-city
+          - san-antonio
+          - san-diego
+          - san-francisco
+          - santa-barbara
+          - seattle
+          - sonoma
+          - spokane
+          - st-louis
+          - stamford
+          - tampa
+          - traverse-city
+          - tucson
+          - washington
+          - wenatchee
+          - wilmington-nc
+          - worcester
+          default: boston
+        example: boston
+      - name: region
+        in: query
+        description: Neighborhood / sub-area.
+        schema:
+          type: string
+      - name: q
+        in: query
+        description: Substring match on the venue name.
+        schema:
+          type: string
+          maxLength: 100
+      - name: type
+        in: query
+        description: Venue type, e.g. bookstore, music venue, library.
+        schema:
+          type: string
+      - name: sort
+        in: query
+        description: Order.
+        schema:
+          type: string
+          enum:
+          - name
+          - upcoming
+          default: name
+      responses:
+        '200':
+          description: Venues.
+          headers:
+            X-RateLimit-Remaining:
+              description: Calls left this MONTH on this key.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests allowed per MINUTE, shared by all of the account's keys.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: When the per-minute window reopens (Unix seconds).
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Venue'
+                  meta:
+                    type: object
+        '401':
+          description: Missing or invalid API key.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Per-minute rate limit or monthly quota exceeded. `Retry-After` is the seconds until the minute window reopens, or until the quota refills on the 1st.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Venue:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        city:
+          type: string
+        region:
+          type:
+          - string
+          - 'null'
+        address:
+          type:
+          - string
+          - 'null'
+        latitude:
+          type:
+          - number
+          - 'null'
+        longitude:
+          type:
+          - number
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        categories:
+          type: array
+          items:
+            type: string
+        url:
+          type:
+          - string
+          - 'null'
+        image:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        upcoming_count:
+          type: integer
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+  securitySchemes:
+    apiKey:
+      type: http
+      scheme: bearer
+      description: 'Your FindLocal API key (`Authorization: Bearer <key>`; `X-API-Key` also works). Not needed on the Playground server.'

@@ -1,0 +1,38 @@
+generated: '2026-09-25'
+method: searched
+generator: extract-docs-artifacts.py (local)
+source: https://findlocal.community/privacy
+sources:
+- https://findlocal.community/privacy
+standards:
+- id: gdpr
+  conforms: true
+  evidence: Residents of California (CCPA) and data subjects in the European Economic Area (GDPR) have rights to access, correct, delete and port
+    personal data, and to object to or restrict certain processing.
+- id: openapi-3.1
+  conforms: true
+  evidence: the document declares 3.1.0
+- id: oauth2
+  conforms: false
+  evidence: 'securitySchemes: bearerAuth (http)'
+- id: rfc9457
+  conforms: false
+  evidence: no response declares application/problem+json
+- id: idempotency
+  conforms: false
+  evidence: no idempotency key parameter on mutating operations
+- id: pagination
+  conforms: true
+  evidence: list operations take limit
+- id: ratelimit-headers
+  conforms: true
+  evidence: responses declare X-RateLimit-Limit, X-RateLimit-Remaining
+- id: ccpa
+  conforms: true
+  evidence: Residents of California (CCPA) and data subjects in the European Economic Area (GDPR) have rights to access, correct, delete and port
+    personal data, and to object to or restrict certain processing.
+  source: https://findlocal.community/privacy
+- id: openapi-3.2
+  conforms: true
+  evidence: the document declares 3.2.0
+docs: https://findlocal.community/privacy

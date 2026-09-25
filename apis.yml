@@ -1,23 +1,369 @@
 aid: findlocal
 name: FindLocal
-description: 'FindLocal is a company surfaced via the API Evangelist harvest backlog (source: new-submission)
-  and added to the network as a stub for full-pipeline profiling.'
+image: https://findlocal.community/og-default.png
+description: FindLocal provides a hyper‑local events API that aggregates over 86,000 upcoming events from more than 10,000 venues across 83 US
+  metros. The platform offers JSON API access and an MCP server for developers to integrate event data into applications, with features like searchable
+  calendars, maps, and widgets. Users can sign up for free API keys, manage billing, and explore event data via a developer portal. The service
+  reads venue calendars directly, ensuring up‑to‑date listings of concerts, comedy shows, theater, and community events, and offers a free tier
+  of 1,000 calls per month with no credit‑card required.
 url: https://raw.githubusercontent.com/api-evangelist/findlocal/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:new-submission
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment pass 2026-09-25 (modular-v1; was harvest)
 specificationVersion: '0.20'
 created: '2026-09-25'
 modified: '2026-09-25'
 tags:
-- Company
-apis: []
+- Events
+- API
+- Hyperlocal
+- Community
+- Data
+- OpenData
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/findlocal-bluesky-overlay.yaml
+- type: AgenticAccess
+  url: agentic-access/findlocal-agentic-access.yml
+- type: Plans
+  url: plans/findlocal-plans-pricing.yml
+- type: Spectral
+  url: rules/findlocal-rules.yml
+- type: JSONLD
+  url: json-ld/findlocal-context.jsonld
+- type: Vocabulary
+  url: vocabulary/findlocal-vocabulary.yml
+- type: DataModel
+  url: data-model/findlocal-data-model.yml
+- type: Conventions
+  url: conventions/findlocal-conventions.yml
+- type: Authentication
+  url: authentication/findlocal-authentication.yml
+- type: ErrorCatalog
+  url: errors/findlocal-problem-types.yml
+- type: Conformance
+  url: conformance/findlocal-conformance.yml
+- type: LLMsTxt
+  url: llms/findlocal-llms.txt
+- type: Hosts
+  url: hosts/findlocal-hosts.yml
+- type: Vendors
+  url: vendors/findlocal-vendors.yml
+- type: TermsOfService
+  url: https://findlocal.community/terms
+- type: PrivacyPolicy
+  url: https://findlocal.community/privacy
+- type: Blog
+  url: https://findlocal.community/blog
+- type: DomainSecurity
+  url: security/findlocal-domain-security.yml
 - type: Website
   url: https://findlocal.community/
+- type: GitHubOrganization
+  url: https://github.com/findlocal
+- type: Postman
+  url: https://www.postman.com/findlocal/workspace
+- type: Documentation
+  url: https://findlocal.community/docs
+- type: APIReference
+  url: https://findlocal.community/openapi.json
+- type: GettingStarted
+  url: https://findlocal.community/signup
+- type: Pricing
+  url: https://findlocal.community/pricing
+- type: SignUp
+  url: https://findlocal.community/signup
+- type: Login
+  url: https://findlocal.community/login
+apis:
+- aid: findlocal:findlocal-bluesky-api
+  name: FindLocal Bluesky API
+  description: The Bluesky API from FindLocal — 2 operation(s) for bluesky.
+  humanURL: https://findlocal.community/docs
+  baseURL: https://findlocal.community/api
+  tags:
+  - Bluesky
+  properties:
+  - type: OpenAPI
+    url: openapi/findlocal-bluesky-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/findlocal-profile-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-posts-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-mover-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-item-schema.json
+- aid: findlocal:findlocal-github-api
+  name: FindLocal GitHub API
+  description: The Github API from FindLocal — 2 operation(s) for github.
+  humanURL: https://findlocal.community/docs
+  baseURL: https://findlocal.community/api
+  tags:
+  - Github
+  properties:
+  - type: OpenAPI
+    url: openapi/findlocal-github-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/findlocal-profile-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-posts-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-mover-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-item-schema.json
+- aid: findlocal:findlocal-history-api
+  name: FindLocal History API
+  description: The History API from FindLocal — 1 operation(s) for history.
+  humanURL: https://findlocal.community/docs
+  baseURL: https://findlocal.community/api
+  tags:
+  - History
+  properties:
+  - type: OpenAPI
+    url: openapi/findlocal-history-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/findlocal-profile-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-posts-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-mover-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-item-schema.json
+- aid: findlocal:findlocal-instagram-api
+  name: FindLocal Instagram API
+  description: The Instagram API from FindLocal — 1 operation(s) for instagram.
+  humanURL: https://findlocal.community/docs
+  baseURL: https://findlocal.community/api
+  tags:
+  - Instagram
+  properties:
+  - type: OpenAPI
+    url: openapi/findlocal-instagram-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/findlocal-profile-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-posts-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-mover-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-item-schema.json
+- aid: findlocal:findlocal-linktree-api
+  name: FindLocal Linktree API
+  description: The Linktree API from FindLocal — 1 operation(s) for linktree.
+  humanURL: https://findlocal.community/docs
+  baseURL: https://findlocal.community/api
+  tags:
+  - Linktree
+  properties:
+  - type: OpenAPI
+    url: openapi/findlocal-linktree-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/findlocal-profile-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-posts-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-mover-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-item-schema.json
+- aid: findlocal:findlocal-mastodon-api
+  name: FindLocal Mastodon API
+  description: The Mastodon API from FindLocal — 2 operation(s) for mastodon.
+  humanURL: https://findlocal.community/docs
+  baseURL: https://findlocal.community/api
+  tags:
+  - Mastodon
+  properties:
+  - type: OpenAPI
+    url: openapi/findlocal-mastodon-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/findlocal-profile-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-posts-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-mover-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-item-schema.json
+- aid: findlocal:findlocal-medium-api
+  name: FindLocal Medium API
+  description: The Medium API from FindLocal — 1 operation(s) for medium.
+  humanURL: https://findlocal.community/docs
+  baseURL: https://findlocal.community/api
+  tags:
+  - Medium
+  properties:
+  - type: OpenAPI
+    url: openapi/findlocal-medium-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/findlocal-profile-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-posts-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-mover-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-item-schema.json
+- aid: findlocal:findlocal-movers-api
+  name: FindLocal Movers API
+  description: The Movers API from FindLocal — 1 operation(s) for movers.
+  humanURL: https://findlocal.community/docs
+  baseURL: https://findlocal.community/api
+  tags:
+  - Movers
+  properties:
+  - type: OpenAPI
+    url: openapi/findlocal-movers-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/findlocal-profile-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-posts-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-mover-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-item-schema.json
+- aid: findlocal:findlocal-events-api
+  name: FindLocal Events API
+  description: Hyper‑local events API providing upcoming events across US metros.
+  humanURL: https://findlocal.community/docs
+  baseURL: https://findlocal.community/api
+  tags:
+  - Events
+- aid: findlocal:findlocal-nichos-api
+  name: FindLocal Nichos API
+  description: The Nichos API from FindLocal — 1 operation(s) for nichos.
+  humanURL: https://findlocal.community/docs
+  baseURL: https://findlocal.community/api
+  tags:
+  - Nichos
+  properties:
+  - type: OpenAPI
+    url: openapi/findlocal-nichos-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/findlocal-profile-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-posts-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-mover-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-item-schema.json
+- aid: findlocal:findlocal-pinterest-api
+  name: FindLocal Pinterest API
+  description: The Pinterest API from FindLocal — 1 operation(s) for pinterest.
+  humanURL: https://findlocal.community/docs
+  baseURL: https://findlocal.community/api
+  tags:
+  - Pinterest
+  properties:
+  - type: OpenAPI
+    url: openapi/findlocal-pinterest-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/findlocal-profile-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-posts-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-mover-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-item-schema.json
+- aid: findlocal:findlocal-soundcloud-api
+  name: FindLocal Soundcloud API
+  description: The Soundcloud API from FindLocal — 1 operation(s) for soundcloud.
+  humanURL: https://findlocal.community/docs
+  baseURL: https://findlocal.community/api
+  tags:
+  - Soundcloud
+  properties:
+  - type: OpenAPI
+    url: openapi/findlocal-soundcloud-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/findlocal-profile-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-posts-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-mover-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-item-schema.json
+- aid: findlocal:findlocal-threads-api
+  name: FindLocal Threads API
+  description: The Threads API from FindLocal — 2 operation(s) for threads.
+  humanURL: https://findlocal.community/docs
+  baseURL: https://findlocal.community/api
+  tags:
+  - Threads
+  properties:
+  - type: OpenAPI
+    url: openapi/findlocal-threads-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/findlocal-profile-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-posts-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-mover-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-item-schema.json
+- aid: findlocal:findlocal-tiktok-api
+  name: FindLocal Tiktok API
+  description: The Tiktok API from FindLocal — 1 operation(s) for tiktok.
+  humanURL: https://findlocal.community/docs
+  baseURL: https://findlocal.community/api
+  tags:
+  - Tiktok
+  properties:
+  - type: OpenAPI
+    url: openapi/findlocal-tiktok-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/findlocal-profile-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-posts-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-mover-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-item-schema.json
+- aid: findlocal:findlocal-trends-api
+  name: FindLocal Trends API
+  description: The Trends API from FindLocal — 1 operation(s) for trends.
+  humanURL: https://findlocal.community/docs
+  baseURL: https://findlocal.community/api
+  tags:
+  - Trends
+  properties:
+  - type: OpenAPI
+    url: openapi/findlocal-trends-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/findlocal-profile-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-posts-envelope-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-mover-schema.json
+  - type: JSONSchema
+    url: json-schema/findlocal-item-schema.json
+- aid: findlocal:findlocal-events-api
+  name: FindLocal Events API
+  description: The Events API from FindLocal — 2 operation(s) for events.
+  humanURL: https://findlocal.community/docs
+  baseURL: https://findlocal.community/api
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/findlocal-events-api-openapi.yml
+- aid: findlocal:findlocal-venues-api
+  name: FindLocal Venues API
+  description: The Venues API from FindLocal — 1 operation(s) for venues.
+  humanURL: https://findlocal.community/docs
+  baseURL: https://findlocal.community/api
+  tags:
+  - Venues
+  properties:
+  - type: OpenAPI
+    url: openapi/findlocal-venues-api-openapi.yml
+x-enrichment:
+  date: '2026-09-25'
+  status: enriched
+  artifacts_added: 53
+  pass: modular-v1
+  engine: identity=local,contract=local,surfaces=local,docs=local

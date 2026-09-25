@@ -1,0 +1,16 @@
+generated: '2026-09-25'
+method: searched
+generator: extract-docs-artifacts.py (local)
+source: https://findlocal.community/login
+sources:
+- https://findlocal.community/login
+- https://findlocal.community/mcp
+- https://findlocal.community/login
+idempotency:
+  coverage: na
+  evidence: The API is read‑only; no write operations are documented, so idempotency does not apply.
+pagination:
+  style: limit query parameter
+  evidence: Endpoints accept a `limit` parameter (e.g., 1–200, default 50) and responses include `total_matched` and `returned` fields for paging.
+authentication: OAuth 2.1 with PKCE and dynamic client registration; after registration a consent page asks for the API key.
+docs: https://findlocal.community/login

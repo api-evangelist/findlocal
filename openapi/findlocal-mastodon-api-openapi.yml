@@ -133,60 +133,6 @@ paths:
       - Mastodon
 components:
   schemas:
-    PostItem:
-      type: object
-      properties:
-        id:
-          type: string
-        url:
-          type:
-          - string
-          - 'null'
-        text:
-          type:
-          - string
-          - 'null'
-        text_html:
-          type:
-          - string
-          - 'null'
-          description: Mastodon only. Third-party HTML, unsanitised — sanitise before rendering or you have an XSS hole. `text` is the same content already stripped.
-        title:
-          type: 'null'
-          description: 'Always null: a status has no title.'
-        position:
-          type: 'null'
-          description: 'Always null: chronological order is not a ranking.'
-        published_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        thumbnail_url:
-          type:
-          - string
-          - 'null'
-          description: Null on bluesky and mastodon — the image embed has not been measured on a large enough sample to promise a shape.
-        metrics:
-          type: object
-          properties:
-            likes:
-              type:
-              - integer
-              - 'null'
-            replies:
-              type:
-              - integer
-              - 'null'
-            reposts:
-              type:
-              - integer
-              - 'null'
-            quotes:
-              type:
-              - integer
-              - 'null'
-              description: 'Null on threads: the source publishes none.'
     ProfileEnvelope:
       type: object
       required:
@@ -376,6 +322,60 @@ components:
           type: boolean
         request_id:
           type: string
+    PostItem:
+      type: object
+      properties:
+        id:
+          type: string
+        url:
+          type:
+          - string
+          - 'null'
+        text:
+          type:
+          - string
+          - 'null'
+        text_html:
+          type:
+          - string
+          - 'null'
+          description: Mastodon only. Third-party HTML, unsanitised — sanitise before rendering or you have an XSS hole. `text` is the same content already stripped.
+        title:
+          type: 'null'
+          description: 'Always null: a status has no title.'
+        position:
+          type: 'null'
+          description: 'Always null: chronological order is not a ranking.'
+        published_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        thumbnail_url:
+          type:
+          - string
+          - 'null'
+          description: Null on bluesky and mastodon — the image embed has not been measured on a large enough sample to promise a shape.
+        metrics:
+          type: object
+          properties:
+            likes:
+              type:
+              - integer
+              - 'null'
+            replies:
+              type:
+              - integer
+              - 'null'
+            reposts:
+              type:
+              - integer
+              - 'null'
+            quotes:
+              type:
+              - integer
+              - 'null'
+              description: 'Null on threads: the source publishes none.'
   securitySchemes:
     bearerAuth:
       type: http

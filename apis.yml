@@ -15,6 +15,12 @@ specificationVersion: '0.20'
 created: '2026-09-25'
 modified: '2026-09-25'
 tags:
+- Event
+- Hyperlocal
+- Community
+- Data
+- Open Data
+tags_raw:
 - Events
 - API
 - Hyperlocal
@@ -106,6 +112,8 @@ apis:
   humanURL: https://findlocal.community/docs
   baseURL: https://findlocal.community/api
   tags:
+  - GitHub
+  tags_raw:
   - Github
   properties:
   - type: OpenAPI
@@ -232,6 +240,8 @@ apis:
   humanURL: https://findlocal.community/docs
   baseURL: https://findlocal.community/api
   tags:
+  - Event
+  tags_raw:
   - Events
 - aid: findlocal:findlocal-nichos-api
   name: FindLocal Nichos API
@@ -275,6 +285,8 @@ apis:
   humanURL: https://findlocal.community/docs
   baseURL: https://findlocal.community/api
   tags:
+  - SoundCloud
+  tags_raw:
   - Soundcloud
   properties:
   - type: OpenAPI
@@ -311,6 +323,8 @@ apis:
   humanURL: https://findlocal.community/docs
   baseURL: https://findlocal.community/api
   tags:
+  - TikTok
+  tags_raw:
   - Tiktok
   properties:
   - type: OpenAPI
@@ -347,6 +361,8 @@ apis:
   humanURL: https://findlocal.community/docs
   baseURL: https://findlocal.community/api
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI

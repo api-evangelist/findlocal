@@ -116,6 +116,45 @@ paths:
       - Trends
 components:
   schemas:
+    ApiError:
+      type: object
+      required:
+      - erro
+      properties:
+        error:
+          type: string
+          enum:
+          - chave_ausente
+          - chave_invalida
+          - intervalo_invalido
+          - parametro_invalido
+          - sem_creditos
+          - teto_estourado
+          - endpoint_indisponivel
+          - metodo_invalido
+          - indisponivel
+        message:
+          type: string
+        http:
+          type: integer
+          description: Echoed by errors that originate in the database. The real HTTP status is authoritative — do not branch on this field.
+        limit:
+          type: integer
+        renews_at:
+          type: string
+          format: date
+        credits_balance:
+          type: integer
+          description: '`sem_creditos` only: credits left on the key.'
+        needed:
+          type: integer
+          description: '`sem_creditos` only: credits the call would cost.'
+        spent_this_month:
+          type: integer
+          description: '`teto_estourado` only: credits spent this month.'
+        cap:
+          type: integer
+          description: '`teto_estourado` only: the monthly ceiling.'
     Item:
       type: object
       properties:
@@ -166,45 +205,6 @@ components:
           type:
           - integer
           - 'null'
-    ApiError:
-      type: object
-      required:
-      - erro
-      properties:
-        error:
-          type: string
-          enum:
-          - chave_ausente
-          - chave_invalida
-          - intervalo_invalido
-          - parametro_invalido
-          - sem_creditos
-          - teto_estourado
-          - endpoint_indisponivel
-          - metodo_invalido
-          - indisponivel
-        message:
-          type: string
-        http:
-          type: integer
-          description: Echoed by errors that originate in the database. The real HTTP status is authoritative — do not branch on this field.
-        limit:
-          type: integer
-        renews_at:
-          type: string
-          format: date
-        credits_balance:
-          type: integer
-          description: '`sem_creditos` only: credits left on the key.'
-        needed:
-          type: integer
-          description: '`sem_creditos` only: credits the call would cost.'
-        spent_this_month:
-          type: integer
-          description: '`teto_estourado` only: credits spent this month.'
-        cap:
-          type: integer
-          description: '`teto_estourado` only: the monthly ceiling.'
   securitySchemes:
     bearerAuth:
       type: http

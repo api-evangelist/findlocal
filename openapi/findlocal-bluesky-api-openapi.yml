@@ -133,6 +133,52 @@ paths:
       - Bluesky
 components:
   schemas:
+    PostsEnvelope:
+      type: object
+      required:
+      - success
+      - platform
+      - endpoint
+      - data
+      - error
+      - credits_used
+      - cached
+      - request_id
+      description: 'Same envelope as every other route. `data.items` carries the posts the account itself wrote — reposts and boosts of other people are excluded by authorship. `has_more` is false and `next_cursor` is null on all three platforms today: there is no deep pagination, and the fields are present so the shape does not change on the day there is.'
+      properties:
+        success:
+          type: boolean
+        platform:
+          type: string
+        endpoint:
+          type: string
+        data:
+          type:
+          - object
+          - 'null'
+          properties:
+            author:
+              $ref: '#/components/schemas/Author'
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/PostItem'
+            has_more:
+              type: boolean
+            next_cursor:
+              type:
+              - string
+              - 'null'
+        error:
+          type:
+          - object
+          - 'null'
+        credits_used:
+          type: integer
+        cached:
+          type: boolean
+        request_id:
+          type: string
     ProfileEnvelope:
       type: object
       required:
@@ -276,52 +322,6 @@ components:
           type:
           - string
           - 'null'
-    PostsEnvelope:
-      type: object
-      required:
-      - success
-      - platform
-      - endpoint
-      - data
-      - error
-      - credits_used
-      - cached
-      - request_id
-      description: 'Same envelope as every other route. `data.items` carries the posts the account itself wrote — reposts and boosts of other people are excluded by authorship. `has_more` is false and `next_cursor` is null on all three platforms today: there is no deep pagination, and the fields are present so the shape does not change on the day there is.'
-      properties:
-        success:
-          type: boolean
-        platform:
-          type: string
-        endpoint:
-          type: string
-        data:
-          type:
-          - object
-          - 'null'
-          properties:
-            author:
-              $ref: '#/components/schemas/Author'
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/PostItem'
-            has_more:
-              type: boolean
-            next_cursor:
-              type:
-              - string
-              - 'null'
-        error:
-          type:
-          - object
-          - 'null'
-        credits_used:
-          type: integer
-        cached:
-          type: boolean
-        request_id:
-          type: string
     PostItem:
       type: object
       properties:

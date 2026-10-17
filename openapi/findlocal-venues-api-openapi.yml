@@ -178,11 +178,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
     Venue:
       type: object
       properties:
@@ -231,6 +226,11 @@ components:
           - 'null'
         upcoming_count:
           type: integer
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
   securitySchemes:
     apiKey:
       type: http

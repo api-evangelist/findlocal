@@ -340,6 +340,11 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
     Event:
       type: object
       properties:
@@ -453,11 +458,6 @@ components:
           - 0
           - 1
         updated_at:
-          type: string
-    Error:
-      type: object
-      properties:
-        error:
           type: string
   securitySchemes:
     apiKey:
